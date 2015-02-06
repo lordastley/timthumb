@@ -1,0 +1,43 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteBase /stuff/tt/
+
+# Once a URL is rewritten, the server fires a redirect... which then generates
+# a new request, and that is *also* passed through mod_rewrite.
+# This bit here tests our query string to see if that's happened.
+RewriteCond %{QUERY_STRING} src=http
+RewriteRule . - [L,R]
+
+# Rules below look repetitive.  Regexes are strange beasts, and unfortunately
+# joining these rules up leads to some... "odd" matching, so they're separated.
+
+# Parse boolean query parameters
+RewriteRule (.*)(s)/([01])/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(u)/([01])/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(ar)/([01])/(.*http.+) $1$4?$2=$3 [QSA]
+RewriteRule (.*)(ct)/([01])/(.*http.+)  $1$4?$2=$3 [QSA]
+
+# Parse numeric query parameters
+RewriteRule (.*)(w)/([0-9]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(h)/([0-9]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(d)/([0-9]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(q)/([0-9]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(zc)/([0-9]+)/(.*http.+) $1$4?$2=$3 [QSA]
+
+# Parse strings
+RewriteRule (.*)(a)/([^/]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(f)/([^/]+)/(.*http.+)  $1$4?$2=$3 [QSA]
+RewriteRule (.*)(cc)/([^/]+)/(.*http.+) $1$4?$2=$3 [QSA]
+
+# Width and height shortcuts
+RewriteRule ^([0-9]+)/([0-9]+)/(http.+)$ ?w=$1&h=$2 [QSA,S=1]
+RewriteRule ^([0-9]+)/(http.+)$ ?w=$1 [QSA]
+
+# Ditch anything else and take the image source URL
+# Fun fact: Apache turns // -> / in the URI that gets handed to mod_rewrite.
+# In order to get the URL with full http://, we turn to the original request.
+RewriteCond %{THE_REQUEST} (http[s]?://[^\ ]*)
+RewriteRule (.+) index.php?src=%1 [QSA,L]
+
+</IfModule>

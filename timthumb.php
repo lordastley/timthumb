@@ -23,42 +23,42 @@
 define ('VERSION', '2.8.14');																		// Version of this script 
 //Load a config file if it exists. Otherwise, use the values below
 if( file_exists(dirname(__FILE__) . '/timthumb-config.php'))	require_once('timthumb-config.php');
-if(! defined('DEBUG_ON') )					define ('DEBUG_ON', false);								// Enable debug logging to web server error log (STDERR)
-if(! defined('DEBUG_LEVEL') )				define ('DEBUG_LEVEL', 1);								// Debug level 1 is less noisy and 3 is the most noisy
-if(! defined('MEMORY_LIMIT') )				define ('MEMORY_LIMIT', '30M');							// Set PHP memory limit
-if(! defined('BLOCK_EXTERNAL_LEECHERS') ) 	define ('BLOCK_EXTERNAL_LEECHERS', false);				// If the image or webshot is being loaded on an external site, display a red "No Hotlinking" gif.
-if(! defined('DISPLAY_ERROR_MESSAGES') )	define ('DISPLAY_ERROR_MESSAGES', true);				// Display error messages. Set to false to turn off errors (good for production websites)
+if(! defined('DEBUG_ON') )			define ('DEBUG_ON', false);				// Enable debug logging to web server error log (STDERR)
+if(! defined('DEBUG_LEVEL') )			define ('DEBUG_LEVEL', 1);				// Debug level 1 is less noisy and 3 is the most noisy
+if(! defined('MEMORY_LIMIT') )			define ('MEMORY_LIMIT', '30M');				// Set PHP memory limit
+if(! defined('BLOCK_EXTERNAL_LEECHERS') ) 	define ('BLOCK_EXTERNAL_LEECHERS', false);		// If the image or webshot is being loaded on an external site, display a red "No Hotlinking" gif.
+if(! defined('DISPLAY_ERROR_MESSAGES') )	define ('DISPLAY_ERROR_MESSAGES', true);		// Display error messages. Set to false to turn off errors (good for production websites)
 //Image fetching and caching
-if(! defined('ALLOW_EXTERNAL') )			define ('ALLOW_EXTERNAL', TRUE);						// Allow image fetching from external websites. Will check against ALLOWED_SITES if ALLOW_ALL_EXTERNAL_SITES is false
-if(! defined('ALLOW_ALL_EXTERNAL_SITES') ) 	define ('ALLOW_ALL_EXTERNAL_SITES', false);				// Less secure. 
-if(! defined('FILE_CACHE_ENABLED') ) 		define ('FILE_CACHE_ENABLED', TRUE);					// Should we store resized/modified images on disk to speed things up?
+if(! defined('ALLOW_EXTERNAL') )		define ('ALLOW_EXTERNAL', TRUE);		        // Allow image fetching from external websites. Will check against ALLOWED_SITES if ALLOW_ALL_EXTERNAL_SITES is false
+if(! defined('ALLOW_ALL_EXTERNAL_SITES') ) 	define ('ALLOW_ALL_EXTERNAL_SITES', false);		// Less secure. 
+if(! defined('FILE_CACHE_ENABLED') ) 		define ('FILE_CACHE_ENABLED', TRUE);			// Should we store resized/modified images on disk to speed things up?
 if(! defined('FILE_CACHE_TIME_BETWEEN_CLEANS'))	define ('FILE_CACHE_TIME_BETWEEN_CLEANS', 86400);	// How often the cache is cleaned 
 
-if(! defined('FILE_CACHE_MAX_FILE_AGE') ) 	define ('FILE_CACHE_MAX_FILE_AGE', 86400);				// How old does a file have to be to be deleted from the cache
-if(! defined('FILE_CACHE_SUFFIX') ) 		define ('FILE_CACHE_SUFFIX', '.timthumb.txt');			// What to put at the end of all files in the cache directory so we can identify them
-if(! defined('FILE_CACHE_PREFIX') ) 		define ('FILE_CACHE_PREFIX', 'timthumb');				// What to put at the beg of all files in the cache directory so we can identify them
-if(! defined('FILE_CACHE_DIRECTORY') ) 		define ('FILE_CACHE_DIRECTORY', './cache');				// Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
-if(! defined('MAX_FILE_SIZE') )				define ('MAX_FILE_SIZE', 10485760);						// 10 Megs is 10485760. This is the max internal or external file size that we'll process.  
-if(! defined('CURL_TIMEOUT') )				define ('CURL_TIMEOUT', 20);							// Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
-if(! defined('WAIT_BETWEEN_FETCH_ERRORS') )	define ('WAIT_BETWEEN_FETCH_ERRORS', 3600);				// Time to wait between errors fetching remote file
+if(! defined('FILE_CACHE_MAX_FILE_AGE') ) 	define ('FILE_CACHE_MAX_FILE_AGE', 86400);		// How old does a file have to be to be deleted from the cache
+if(! defined('FILE_CACHE_SUFFIX') ) 		define ('FILE_CACHE_SUFFIX', '.timthumb.txt');		// What to put at the end of all files in the cache directory so we can identify them
+if(! defined('FILE_CACHE_PREFIX') ) 		define ('FILE_CACHE_PREFIX', 'timthumb');		// What to put at the beg of all files in the cache directory so we can identify them
+if(! defined('FILE_CACHE_DIRECTORY') ) 		define ('FILE_CACHE_DIRECTORY', './cache');		// Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
+if(! defined('MAX_FILE_SIZE') )			define ('MAX_FILE_SIZE', 10485760);			// 10 Megs is 10485760. This is the max internal or external file size that we'll process.  
+if(! defined('CURL_TIMEOUT') )			define ('CURL_TIMEOUT', 20);				// Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
+if(! defined('WAIT_BETWEEN_FETCH_ERRORS') )	define ('WAIT_BETWEEN_FETCH_ERRORS', 3600);		// Time to wait between errors fetching remote file
 
 //Browser caching
-if(! defined('BROWSER_CACHE_MAX_AGE') ) 	define ('BROWSER_CACHE_MAX_AGE', 864000);				// Time to cache in the browser
-if(! defined('BROWSER_CACHE_DISABLE') ) 	define ('BROWSER_CACHE_DISABLE', false);				// Use for testing if you want to disable all browser caching
+if(! defined('BROWSER_CACHE_MAX_AGE') ) 	define ('BROWSER_CACHE_MAX_AGE', 864000);		// Time to cache in the browser
+if(! defined('BROWSER_CACHE_DISABLE') ) 	define ('BROWSER_CACHE_DISABLE', false);		// Use for testing if you want to disable all browser caching
 
 //Image size and defaults
-if(! defined('MAX_WIDTH') )					define ('MAX_WIDTH', 1500);								// Maximum image width
-if(! defined('MAX_HEIGHT') )				define ('MAX_HEIGHT', 1500);							// Maximum image height
-if(! defined('NOT_FOUND_IMAGE') )			define ('NOT_FOUND_IMAGE', '');							// Image to serve if any 404 occurs 
-if(! defined('ERROR_IMAGE') )				define ('ERROR_IMAGE', '');								// Image to serve if an error occurs instead of showing error message 
-if(! defined('PNG_IS_TRANSPARENT') )		define ('PNG_IS_TRANSPARENT', FALSE);					// Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour 
-if(! defined('DEFAULT_Q') )					define ('DEFAULT_Q', 90);								// Default image quality. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_ZC') )				define ('DEFAULT_ZC', 1);								// Default zoom/crop setting. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_F') )					define ('DEFAULT_F', '');								// Default image filters. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_S') )					define ('DEFAULT_S', 0);								// Default sharpen value. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_CC') )				define ('DEFAULT_CC', 'ffffff');						// Default canvas colour. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_WIDTH') )				define ('DEFAULT_WIDTH', 100);							// Default thumbnail width. Allows overrid in timthumb-config.php
-if(! defined('DEFAULT_HEIGHT') )			define ('DEFAULT_HEIGHT', 100);							// Default thumbnail height. Allows overrid in timthumb-config.php
+if(! defined('MAX_WIDTH') )			define ('MAX_WIDTH', 1500);				// Maximum image width
+if(! defined('MAX_HEIGHT') )			define ('MAX_HEIGHT', 1500);				// Maximum image height
+if(! defined('NOT_FOUND_IMAGE') )		define ('NOT_FOUND_IMAGE', '');				// Image to serve if any 404 occurs 
+if(! defined('ERROR_IMAGE') )			define ('ERROR_IMAGE', '');				// Image to serve if an error occurs instead of showing error message 
+if(! defined('PNG_IS_TRANSPARENT') )		define ('PNG_IS_TRANSPARENT', FALSE);			// Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour 
+if(! defined('DEFAULT_Q') )			define ('DEFAULT_Q', 90);				// Default image quality. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_ZC') )			define ('DEFAULT_ZC', 1);				// Default zoom/crop setting. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_F') )			define ('DEFAULT_F', '');				// Default image filters. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_S') )			define ('DEFAULT_S', 0);				// Default sharpen value. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_CC') )		        define ('DEFAULT_CC', 'ffffff');			// Default canvas colour. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_WIDTH') )			define ('DEFAULT_WIDTH', 100);				// Default thumbnail width. Allows overrid in timthumb-config.php
+if(! defined('DEFAULT_HEIGHT') )		define ('DEFAULT_HEIGHT', 100);				// Default thumbnail height. Allows overrid in timthumb-config.php
 
 /**
  * Additional Parameters:
@@ -534,6 +534,10 @@ class timthumb {
 		$sharpen = (bool) $this->param('s', DEFAULT_S);
 		$canvas_color = $this->param('cc', DEFAULT_CC);
 		$canvas_trans = (bool) $this->param('ct', '1');
+                // MY HAX
+		$dither = $this->param('d', 1); //1-bit dither!
+		$upscale = (bool) $this->param('u', 0); //don't upscale by default.
+		$maintain_aspect = (bool) $this->param('ar', 1); //maintain aspect ratio by default
 
 		// set default width and height if neither are set already
 		if ($new_width == 0 && $new_height == 0) {
@@ -565,6 +569,30 @@ class timthumb {
 			$new_height = floor ($height * ($new_width / $width));
 		} else if ($new_height && !$new_width) {
 			$new_width = floor ($width * ($new_height / $height));
+		}
+
+		//MY HAX. Don't upscale an image unless requested to.
+		if (!$upscale){
+			$new_width = min($new_width, $width);
+			$new_height = min($new_height, $height);
+		}
+
+		//More of MY HAX. Respect aspect ratio, even if both width and height are set. This unsets $zoom_crop.
+		if ($maintain_aspect){
+			$zoom_crop = 0;
+			
+			$x_ratio = $new_width / $width;
+			$y_ratio = $new_height / $height;
+			
+			if (($x_ratio * $height) < $new_height) {
+			$new_height = ceil($x_ratio * $height);
+			//$new_width = $new_width;
+			}
+			else {
+			$new_width = ceil($y_ratio * $width);
+			//$new_height = $new_height;
+			}
+		
 		}
 
 		// scale down and add borders
@@ -741,6 +769,177 @@ class timthumb {
 			imageconvolution ($canvas, $sharpenMatrix, $divisor, $offset);
 
 		}
+		
+		//1-bit dither. MY HAX.
+		if ($dither == 1){
+                    // Atkinson dither
+			// make the image greyscale.
+			imagefilter($canvas, IMG_FILTER_GRAYSCALE);
+			// make output b/w image.
+			$output = imagecreate($new_width, $new_height);
+			$black = imagecolorallocate($output, 0, 0, 0); //background color. currently black, as shown by the variable name.
+			$white = imagecolorallocate($output, 0xff, 0xff, 0xff);
+			//dither the processed image. this is slow as hell.
+			$img_arr = array(); // added bonus: you can't just define an array of arbitrary size.
+					    // so there's a crapload of isset() calls to not-error when setting array members.
+					    // PHP is da bes language. (why the hell I don't shell out to pnm/pbm tools, I have no idea)
+			for($y=0; $y < $new_height; $y++){
+				for($x=0; $x < $new_width; $x++){
+					
+					if (isset($img_arr[$x][$y])){
+						$img_arr[$x][$y] += imagecolorat($canvas, $x, $y); // add the image color to the accumulated error from adjacent pixels.
+					}
+					else{
+						$img_arr[$x][$y] = imagecolorat($canvas, $x, $y); // set the array index
+					}
+
+					$old = $img_arr[$x][$y];
+					
+					if($old > 0xffffff*.5){ // This is the b/w threshold. Currently @ halfway between white and black.
+						$new = 0xffffff;
+						imagesetpixel($output, $x, $y, $white); // Only setting white pixels, because the image is already black.
+					}else{
+						$new = 0x000000;
+					}
+					
+					$quant_error = $old - $new;
+					$error_diffusion = (1/8)*($quant_error); //I can do this because this dither uses 1 value for the applied error diffusion.
+					
+					//dithering here.
+					if ($x+1 < $new_width){
+						if (isset($img_arr[$x+1][$y])){
+							$img_arr[$x+1][$y] += $error_diffusion;
+						}
+						else {
+							$img_arr[$x+1][$y] = $error_diffusion;
+						}
+
+						if ($y+1 < $new_height){
+							if (isset($img_arr[$x+1][$y+1])){
+								$img_arr[$x+1][$y+1] += $error_diffusion;
+							}
+							else {
+								$img_arr[$x+1][$y+1] = $error_diffusion;
+							}
+						}
+						if ($x+2 < $new_width){
+							if (isset($img_arr[$x+2][$y])){
+								$img_arr[$x+2][$y] += $error_diffusion;
+							}
+							else {
+								$img_arr[$x+2][$y] = $error_diffusion;
+							}
+						}
+					}
+					
+					if ($y+1 < $new_height){
+						if (isset($img_arr[$x][$y+1])){
+							$img_arr[$x][$y+1] += $error_diffusion;
+						}
+						else {
+							$img_arr[$x][$y+1] = $error_diffusion;
+						}
+						if ($x-1 >= 0){
+							if (isset($img_arr[$x-1][$y-1])){
+								$img_arr[$x-1][$y+1] += $error_diffusion;
+							}
+							else {
+								$img_arr[$x-1][$y+1] = $error_diffusion;
+							}
+						}
+						if ($y+2 < $new_height){
+							if (isset($img_arr[$x][$y+2])){
+								$img_arr[$x][$y+2] += $error_diffusion;
+							}
+							else {
+								$img_arr[$x][$y+2] = $error_diffusion;
+							}
+						}
+					}// end dithering
+				}// end row loop
+			}//end column loop
+			
+			//blorp the dithered image onto the old canvas.
+			imagecopy($canvas, $output, 0, 0, 0, 0, $new_width, $new_height);
+			imagedestroy($output); //why not.
+		}
+                elseif ($dither == 2) {
+                    // 2x2 Bayer fixed dither
+			// make the image greyscale.
+			imagefilter($canvas, IMG_FILTER_GRAYSCALE);
+			// make output b/w image.
+			$output = imagecreate($new_width, $new_height);
+			$black = imagecolorallocate($output, 0, 0, 0); //background color. currently black, as shown by the variable name.
+			$white = imagecolorallocate($output, 0xff, 0xff, 0xff);
+			//dither the processed image. this is slow as hell.
+                        
+                        // 2x2 Bayer matrix
+                        // This will be multiplied against 'white' to set the threshold
+                        $bayer = array();
+                        $bayer[0][0] = 1/5;
+                        $bayer[0][1] = 3/5;
+                        $bayer[1][0] = 4/5;
+                        $bayer[1][1] = 2/5;
+
+			for($y=0; $y < $new_height; $y++){
+				for($x=0; $x < $new_width; $x++){
+                                        if (imagecolorat($canvas, $x, $y) > 0xFFFFFF*$bayer[$x%2][$y%2]){ // This is the b/w threshold. 
+                                                imagesetpixel($output, $x, $y, $white); // Only setting white pixels, because the image is already black.
+					}// end dithering
+				}// end row loop
+			}//end column loop
+			
+			//blorp the dithered image onto the old canvas.
+			imagecopy($canvas, $output, 0, 0, 0, 0, $new_width, $new_height);
+			imagedestroy($output); //why not.
+                }
+                elseif ($dither == 4) {
+                    // 4x4 Bayer fixed dither
+			// make the image greyscale.
+			imagefilter($canvas, IMG_FILTER_GRAYSCALE);
+			// make output b/w image.
+			$output = imagecreate($new_width, $new_height);
+			$black = imagecolorallocate($output, 0, 0, 0); //background color. currently black, as shown by the variable name.
+			$white = imagecolorallocate($output, 0xff, 0xff, 0xff);
+			//dither the processed image. this is slow as hell.
+                        
+                        // 4x4 Bayer matrix
+                        // This will be multiplied against 'white' to set the threshold
+                        $bayer = array();
+
+                        $bayer[0][0] = 1/17;
+                        $bayer[0][1] = 9/17;
+                        $bayer[0][2] = 3/17;
+                        $bayer[0][3] = 11/17;
+
+                        $bayer[1][0] = 13/17;
+                        $bayer[1][1] = 5/17;
+                        $bayer[1][2] = 15/17;
+                        $bayer[1][3] = 7/17;
+
+                        $bayer[2][0] = 4/17;
+                        $bayer[2][1] = 12/17;
+                        $bayer[2][2] = 2/17;
+                        $bayer[2][3] = 10/17;
+
+                        $bayer[3][0] = 16/17;
+                        $bayer[3][1] = 8/17;
+                        $bayer[3][2] = 14/17;
+                        $bayer[3][3] = 6/17;
+
+			for($y=0; $y < $new_height; $y++){
+				for($x=0; $x < $new_width; $x++){
+                                        if (imagecolorat($canvas, $x, $y) > 0xFFFFFF*$bayer[$x%4][$y%4]){ // This is the b/w threshold. 
+                                                imagesetpixel($output, $x, $y, $white); // Only setting white pixels, because the image is already black.
+					}// end dithering
+				}// end row loop
+			}//end column loop
+			
+			//blorp the dithered image onto the old canvas.
+			imagecopy($canvas, $output, 0, 0, 0, 0, $new_width, $new_height);
+			imagedestroy($output); //why not.
+                }
+
 		//Straight from Wordpress core code. Reduces filesize by up to 70% for PNG's
 		if ( (IMAGETYPE_PNG == $origType || IMAGETYPE_GIF == $origType) && function_exists('imageistruecolor') && !imageistruecolor( $image ) && imagecolortransparent( $image ) > 0 ){
 			imagetruecolortopalette( $canvas, false, imagecolorstotal( $image ) );
