@@ -20,13 +20,13 @@
  * loaded by timthumb. This will save you having to re-edit these variables
  * everytime you download a new version
 */
-define ('VERSION', '2.8.14');                                                                                                                                           // Version of this script 
+define ('VERSION', '2.8.14.01');                                                                                                                                           // Version of this script 
 //Load a config file if it exists. Otherwise, use the values below
 if( file_exists(dirname(__FILE__) . '/timthumb-config.php'))    require_once('timthumb-config.php');
 if(! defined('DEBUG_ON') )                      define ('DEBUG_ON', false);                             // Enable debug logging to web server error log (STDERR)
 if(! defined('DEBUG_LEVEL') )                   define ('DEBUG_LEVEL', 1);                              // Debug level 1 is less noisy and 3 is the most noisy
 if(! defined('MEMORY_LIMIT') )                  define ('MEMORY_LIMIT', '30M');                         // Set PHP memory limit
-if(! defined('BLOCK_EXTERNAL_LEECHERS') )       define ('BLOCK_EXTERNAL_LEECHERS', false);              // If the image or webshot is being loaded on an external site, display a red "No Hotlinking" gif.
+if(! defined('BLOCK_EXTERNAL_LEECHERS') )       define ('BLOCK_EXTERNAL_LEECHERS', false);              // If the image is being loaded on an external site, display a red "No Hotlinking" gif.
 if(! defined('DISPLAY_ERROR_MESSAGES') )        define ('DISPLAY_ERROR_MESSAGES', true);                // Display error messages. Set to false to turn off errors (good for production websites)
 //Image fetching and caching
 if(! defined('ALLOW_EXTERNAL') )                define ('ALLOW_EXTERNAL', TRUE);                        // Allow image fetching from external websites. Will check against ALLOWED_SITES if ALLOW_ALL_EXTERNAL_SITES is false
@@ -76,59 +76,6 @@ if(! defined('OPTIPNG_ENABLED') )               define ('OPTIPNG_ENABLED', false
 if(! defined('OPTIPNG_PATH') )                  define ('OPTIPNG_PATH', '/usr/bin/optipng'); //This will run first because it gives better compression than pngcrush. 
 if(! defined('PNGCRUSH_ENABLED') )              define ('PNGCRUSH_ENABLED', false); 
 if(! defined('PNGCRUSH_PATH') )                 define ('PNGCRUSH_PATH', '/usr/bin/pngcrush'); //This will only run if OPTIPNG_PATH is not set or is not valid
-
-/*
-        -------====Website Screenshots configuration - BETA====-------
-        
-        If you just want image thumbnails and don't want website screenshots, you can safely leave this as is.  
-        
-        If you would like to get website screenshots set up, you will need root access to your own server.
-
-        Enable ALLOW_ALL_EXTERNAL_SITES so you can fetch any external web page. This is more secure now that we're using a non-web folder for cache.
-        Enable BLOCK_EXTERNAL_LEECHERS so that your site doesn't generate thumbnails for the whole Internet.
-
-        Instructions to get website screenshots enabled on Ubuntu Linux:
-
-        1. Install Xvfb with the following command: sudo apt-get install subversion libqt4-webkit libqt4-dev g++ xvfb
-        2. Go to a directory where you can download some code
-        3. Check-out the latest version of CutyCapt with the following command: svn co https://cutycapt.svn.sourceforge.net/svnroot/cutycapt
-        4. Compile CutyCapt by doing: cd cutycapt/CutyCapt
-        5. qmake
-        6. make
-        7. cp CutyCapt /usr/local/bin/
-        8. Test it by running: xvfb-run --server-args="-screen 0, 1024x768x24" CutyCapt --url="http://markmaunder.com/" --out=test.png
-        9. If you get a file called test.png with something in it, it probably worked. Now test the script by accessing it as follows:
-        10. http://yoursite.com/path/to/timthumb.php?src=http://markmaunder.com/&webshot=1
-
-        Notes on performance: 
-        The first time a webshot loads, it will take a few seconds.
-        From then on it uses the regular timthumb caching mechanism with the configurable options above
-        and loading will be very fast.
-
-        --ADVANCED USERS ONLY--
-        If you'd like a slight speedup (about 25%) and you know Linux, you can run the following command which will keep Xvfb running in the background.
-        nohup Xvfb :100 -ac -nolisten tcp -screen 0, 1024x768x24 > /dev/null 2>&1 &
-        Then set WEBSHOT_XVFB_RUNNING = true below. This will save your server having to fire off a new Xvfb server and shut it down every time a new shot is generated. 
-        You will need to take responsibility for keeping Xvfb running in case it crashes. (It seems pretty stable)
-        You will also need to take responsibility for server security if you're running Xvfb as root. 
-
-
-*/
-if(! defined('WEBSHOT_ENABLED') )       define ('WEBSHOT_ENABLED', false);                      //Beta feature. Adding webshot=1 to your query string will cause the script to return a browser screenshot rather than try to fetch an image.
-if(! defined('WEBSHOT_CUTYCAPT') )      define ('WEBSHOT_CUTYCAPT', '/usr/local/bin/CutyCapt'); //The path to CutyCapt. 
-if(! defined('WEBSHOT_XVFB') )          define ('WEBSHOT_XVFB', '/usr/bin/xvfb-run');           //The path to the Xvfb server
-if(! defined('WEBSHOT_SCREEN_X') )      define ('WEBSHOT_SCREEN_X', '1024');                    //1024 works ok
-if(! defined('WEBSHOT_SCREEN_Y') )      define ('WEBSHOT_SCREEN_Y', '768');                     //768 works ok
-if(! defined('WEBSHOT_COLOR_DEPTH') )   define ('WEBSHOT_COLOR_DEPTH', '24');                   //I haven't tested anything besides 24
-if(! defined('WEBSHOT_IMAGE_FORMAT') )  define ('WEBSHOT_IMAGE_FORMAT', 'png');                 //png is about 2.5 times the size of jpg but is a LOT better quality
-if(! defined('WEBSHOT_TIMEOUT') )       define ('WEBSHOT_TIMEOUT', '20');                       //Seconds to wait for a webshot
-if(! defined('WEBSHOT_USER_AGENT') )    define ('WEBSHOT_USER_AGENT', "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.2.18) Gecko/20110614 Firefox/3.6.18"); //I hate to do this, but a non-browser robot user agent might not show what humans see. So we pretend to be Firefox
-if(! defined('WEBSHOT_JAVASCRIPT_ON') ) define ('WEBSHOT_JAVASCRIPT_ON', true);                 //Setting to false might give you a slight speedup and block ads. But it could cause other issues.
-if(! defined('WEBSHOT_JAVA_ON') )       define ('WEBSHOT_JAVA_ON', false);                      //Have only tested this as fase
-if(! defined('WEBSHOT_PLUGINS_ON') )    define ('WEBSHOT_PLUGINS_ON', true);                    //Enable flash and other plugins
-if(! defined('WEBSHOT_PROXY') )         define ('WEBSHOT_PROXY', '');                           //In case you're behind a proxy server. 
-if(! defined('WEBSHOT_XVFB_RUNNING') )  define ('WEBSHOT_XVFB_RUNNING', false);                 //ADVANCED: Enable this if you've got Xvfb running in the background.
-
 
 // If ALLOW_EXTERNAL is true and ALLOW_ALL_EXTERNAL_SITES is false, then external images will only be fetched from these domains and their subdomains. 
 if(! isset($ALLOWED_SITES)){
@@ -301,18 +248,8 @@ class timthumb {
                                 return false;
                         }
                         $this->debug(3, "Got request for external image. Starting serveExternalImage.");
-                        if($this->param('webshot')){
-                                if(WEBSHOT_ENABLED){
-                                        $this->debug(3, "webshot param is set, so we're going to take a webshot.");
-                                        $this->serveWebshot();
-                                } else {
-                                        $this->error("You added the webshot parameter but webshots are disabled on this server. You need to set WEBSHOT_ENABLED == true to enable webshots.");
-                                }
-                        } else {
-                                $this->debug(3, "webshot is NOT set so we're going to try to fetch a regular image.");
-                                $this->serveExternalImage();
-
-                        }
+                        $this->debug(3, "Trying to fetch external image.");
+                        $this->serveExternalImage();
                 } else {
                         $this->debug(3, "Got request for internal image. Starting serveInternalImage()");
                         $this->serveInternalImage();
@@ -1134,59 +1071,6 @@ class timthumb {
         protected function toDelete($name){
                 $this->debug(3, "Scheduling file $name to delete on destruct.");
                 $this->toDeletes[] = $name;
-        }
-        protected function serveWebshot(){
-                $this->debug(3, "Starting serveWebshot");
-                $instr = "Please follow the instructions at http://code.google.com/p/timthumb/ to set your server up for taking website screenshots.";
-                if(! is_file(WEBSHOT_CUTYCAPT)){
-                        return $this->error("CutyCapt is not installed. $instr");
-                }
-                if(! is_file(WEBSHOT_XVFB)){
-                        return $this->Error("Xvfb is not installed. $instr");
-                }
-                $cuty = WEBSHOT_CUTYCAPT;
-                $xv = WEBSHOT_XVFB;
-                $screenX = WEBSHOT_SCREEN_X;
-                $screenY = WEBSHOT_SCREEN_Y;
-                $colDepth = WEBSHOT_COLOR_DEPTH;
-                $format = WEBSHOT_IMAGE_FORMAT;
-                $timeout = WEBSHOT_TIMEOUT * 1000;
-                $ua = WEBSHOT_USER_AGENT;
-                $jsOn = WEBSHOT_JAVASCRIPT_ON ? 'on' : 'off';
-                $javaOn = WEBSHOT_JAVA_ON ? 'on' : 'off';
-                $pluginsOn = WEBSHOT_PLUGINS_ON ? 'on' : 'off';
-                $proxy = WEBSHOT_PROXY ? ' --http-proxy=' . WEBSHOT_PROXY : '';
-                $tempfile = tempnam($this->cacheDirectory, 'timthumb_webshot');
-                $url = $this->src;
-                if(! preg_match('/^https?:\/\/[a-zA-Z0-9\.\-]+/i', $url)){
-                        return $this->error("Invalid URL supplied.");
-                }
-                $url = preg_replace('/[^A-Za-z0-9\-\.\_:\/\?\&\+\;\=]+/', '', $url); //RFC 3986 plus ()$ chars to prevent exploit below. Plus the following are also removed: @*!~#[]',
-                // 2014 update by Mark Maunder: This exploit: http://cxsecurity.com/issue/WLB-2014060134
-                // uses the $(command) shell execution syntax to execute arbitrary shell commands as the web server user. 
-                // So we're now filtering out the characters: '$', '(' and ')' in the above regex to avoid this. 
-                // We are also filtering out chars rarely used in URLs but legal accoring to the URL RFC which might be exploitable. These include: @*!~#[]',
-                // We're doing this because we're passing this URL to the shell and need to make very sure it's not going to execute arbitrary commands. 
-                if(WEBSHOT_XVFB_RUNNING){
-                        putenv('DISPLAY=:100.0');
-                        $command = "$cuty $proxy --max-wait=$timeout --user-agent=\"$ua\" --javascript=$jsOn --java=$javaOn --plugins=$pluginsOn --js-can-open-windows=off --url=\"$url\" --out-format=$format --out=$tempfile";
-                } else {
-                        $command = "$xv --server-args=\"-screen 0, {$screenX}x{$screenY}x{$colDepth}\" $cuty $proxy --max-wait=$timeout --user-agent=\"$ua\" --javascript=$jsOn --java=$javaOn --plugins=$pluginsOn --js-can-open-windows=off --url=\"$url\" --out-format=$format --out=$tempfile";
-                }
-                $this->debug(3, "Executing command: $command");
-                $out = `$command`;
-                $this->debug(3, "Received output: $out");
-                if(! is_file($tempfile)){
-                        $this->set404();
-                        return $this->error("The command to create a thumbnail failed.");
-                }
-                $this->cropTop = true;
-                if($this->processImageAndWriteToCache($tempfile)){
-                        $this->debug(3, "Image processed succesfully. Serving from cache");
-                        return $this->serveCacheFile();
-                } else {
-                        return false;
-                }
         }
         protected function serveExternalImage(){
                 if(! preg_match('/^https?:\/\/[a-zA-Z0-9\-\.]+/i', $this->src)){
